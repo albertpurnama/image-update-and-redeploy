@@ -1,0 +1,21 @@
+{
+  "name": "image-update-and-deploy",
+  "version": "1.0.0",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "esbuild main.js --bundle --platform=node --format=cjs --outfile=dist/main.js",
+    "start": "node dist/main.js",
+    "dev": "node main.js"
+  },
+  "author": "Brody",
+  "license": "MIT",
+  "description": "A CLI tool to update and deploy a service instance on Railway",
+  "dependencies": {
+    "graphql-request": "^6.1.0",
+    "zod": "^3.25.62",
+    "zod-opts": "^0.1.8"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.5"
+  }
+}
