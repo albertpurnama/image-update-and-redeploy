@@ -1,0 +1,39 @@
+name: 'Railway Update and Deploy'
+description: 'Updates a Railway service with a new Docker image and triggers redeployment'
+
+inputs:
+  serviceId:
+    description: 'Railway service ID (UUID)'
+    required: true
+  environmentId:
+    description: 'Railway environment ID (UUID)'
+    required: true
+  image:
+    description: 'Docker image name/tag to deploy'
+    required: true
+  railwayApiToken:
+    description: 'Railway API Token (must be Account or Team token)'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v1
+
+    - name: Install dependencies
+      run: bun install
+      shell: bash
+
+    - name: Build project
+      run: bun run build
+      shell: bash
+
+    - name: Update and deploy
+      run: bun start -- --serviceId=${{ inputs.serviceId }} --environmentId=${{ inputs.environmentId }} --image=${{ inputs.image }}
+      shell: bash
+      env:
+        RAILWAY_API_TOKEN: ${{ inputs.railwayApiToken }}
